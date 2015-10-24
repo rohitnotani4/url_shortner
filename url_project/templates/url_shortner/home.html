@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static  "css/bootstrap.min.css" %}">
+  <link rel="stylesheet" href="{% static  "css/bootstrap.min.css" %}">  
+  <link rel="stylesheet" href="{% static  "css/align.css" %}">  
+  <script src="{% static  "js/bootsrap.min.js" %}"></script>
+  <script src="{% static "js/jquery.min.js" %}"></script>
+</head>
+<body>
+
+<div class="container" >
+  <h2 align="center">URL Shortner</h2>
+  <form role="form" method="post" action="/url_shortner/">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="URL"><b>Enter URL:</b></label>
+        <div><br/></div>
+        <input type="text" class="form-control" id="email" placeholder="http://www.cybrilla.com" algin="center" name="url">
+        {% if valid_url %}
+        <p align="center"> <strong> {{ valid_url }} </strong></p>
+        {% endif %}
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-default">Get Short URL</button>
+  </form>
+</div>
+
+{% if orignal_url %}
+    {% if short_url %}
+    <br/>
+    <br/>
+    <div class="container">
+        <form role="form" method="post" action="/url_shortner/redirect/">
+        {% csrf_token %}
+            <div class="form-group">
+                <label for="URL"><b>Orignal URL:</b></label>
+                <input type="text" class="form-control" value="{{ orignal_url }}" algin="center" name="long_url" readonly>
+                <label for="URL"><b>Shortened URL:</b></label>
+               <input type="text" class="form-control" value="{{ short_url }}" algin="center" name="short_url" readonly>
+            </div>
+        <button type="submit" class="btn btn-default">Visit Site</button>
+      </form>
+    </div>
+    {% endif %}
+{% endif %}
+<div>
+	<img class="center-block" src="{% static "images/url.jpg" %}">
+</div>
+</body>
+</html>
